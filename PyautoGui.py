@@ -1,14 +1,9 @@
 import pyautogui
-from datetime import time
-import os
 import json
-import pprint
-import keyboard
+from config import path_btn_signal, path_btn_pputest
 
-path_1 = os.listdir('C:/Users/andre/Desktop/auto_a/btn')
 
-stop_key = input("Введите клавишу остановки: ")
-
+# 1. Найти координаты для ввода и потом работы
 
 def first_point(list_scrins):
     """
@@ -21,18 +16,18 @@ def first_point(list_scrins):
     - list_points - координаты инпутов 
     """
     list_points = []
-    for screen in list_scrins:  # Проходмся по списку циклом
+    for scrin in list_scrins:  # Проходмся по списку циклом
         try:
             # Добаляем к названия файла папку, аргумент 
             # confidence показвает скакой точностью искать 
-            location = pyautogui.locateOnScreen('btn/' + screen, confidence=0.99)
-            list_points.append({screen[:-4]: location})
+            location = pyautogui.locateOnScreen('btn_pputest/' + scrin, confidence=0.95)
+            list_points.append({scrin[:-4]: location})
 
             # pyautogui.doubleClick(location)
             # pyautogui.write('Hello world!', interval=0.1)
 
         except pyautogui.ImageNotFoundException:
-            print(f'ImageNotFoundException: {screen}')
+            print(f'ImageNotFoundException: {scrin}')
     return list_points
 
 
@@ -59,13 +54,14 @@ def get_key(i_need_this_dict):
 
 def enter_data(data, locations):
     for location in locations:
-        if keyboard.is_pressed(stop_key):
-            exit()
         print(location)
         key, value = get_key(location)
         pyautogui.doubleClick(value)
         print(data[key])
         pyautogui.write(data[key], interval=0.1)
+
+    # pyautogui.typewrite(data)
+    # pass
 
 
 def get_data(name_file):
@@ -93,11 +89,13 @@ def get_keys_or_value(data):
 
 
 def main():
-    list_points = first_point(path_1)  # Список координат
-    data = get_data('sd1.json')  # Читаем json файл (размеры образцов)
+    list_points = first_point(path_btn_signal)
+    data = get_data('dimensions.json')
     for i in data:
-        enter_data(data=i, locations=list_points)  # Ввод размеров
-        delete_input_txt(get_keys_or_value(list_points))  # Удаление размеров
+        print(i)
+        enter_data(data=i, locations=list_points)
+        # Функция для ввода данных о пригрузе и о файле с испытаниями
+        delete_input_txt(get_keys_or_value(list_points))
 
 
 main()

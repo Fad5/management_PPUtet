@@ -27,7 +27,7 @@ class JsonHandler:
         Аргументы:
         - path - путь к файлу
         """
-        with open(f"{path}.json", "r") as file:
+        with open(path, "r") as file:
             data = json.load(file)
         return data
 
