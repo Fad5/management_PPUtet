@@ -47,12 +47,13 @@ def check(list_name_files: list, json_data: dict) -> list:
     """
 
     exits_file_in_table = []
+    not_exits_files = []
     for i in json_data:
-        print(i['Time'])
         if i['Time'] in list_name_files:
             exits_file_in_table.append(i)
         else:
-            print('Файла с таким временем нет: ' + str(i['Time']))
+            not_exits_files.append(i['Name'])
+    print('Нет таких файлов' + str(not_exits_files))
     return exits_file_in_table
 
 

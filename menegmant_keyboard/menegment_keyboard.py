@@ -10,9 +10,8 @@ def search_eco(time_file: str) -> None:
     Функция для поиска файлов
     """
     timeout_step()
+    keyboard.add_hotkey("ctrl+l", lambda: print("ctrl+alt+j was pressed"))
     pyautogui.hotkey('ctrl', 'l')
-    timeout_step()
-    keyboard.add_hotkey("ctrl+alt+j", lambda: print("ctrl+alt+j was pressed"))
     timeout_step()
     pyautogui.write('E:/EDIT')
     timeout_step()

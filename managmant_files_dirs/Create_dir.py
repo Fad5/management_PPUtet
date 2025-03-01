@@ -1,4 +1,4 @@
-from menegmant_keyboard import check_files
+from managmant_files_dirs import check_files
 import os
 from config import SAVE_DIR
 
@@ -16,7 +16,7 @@ def get_data_in_js() -> list:
     name_sample = []
     for i in list_files:
         name_sample.append(i['Name'])
-    return list_files
+    return name_sample
 
 
 def create_dir(list_names: list) -> None:
@@ -37,4 +37,18 @@ def logic_dir() -> None:
     create_dir(list(set(list_name_dir)))
 
 
-logic_dir()
+def get_all_files_if_exist() -> list:
+    """
+    Получение уже существующих фалов
+
+    Возвращает:
+    - is_files - список существующих файлов
+    """
+    dirs = list(set(get_data_in_js()))
+    is_files = []
+    for dir_save in dirs:
+        files = os.listdir(SAVE_DIR + '/' + dir_save)
+        if files:
+            for file in files:
+                is_files.append(file[:-4])
+    return is_files
