@@ -2,7 +2,7 @@ import pandas as pd
 import csv
 import json
 import pprint
-from Hadler_file import JsonHandler
+from managmant_files_dirs.Hadler_file import JsonHandler
 
 def write_json(name_file, data):
     with open(f"{name_file}.json", "w", encoding='utf-8') as fh:

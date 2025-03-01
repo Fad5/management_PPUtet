@@ -1,5 +1,5 @@
 import os
-from Hadler_file import JsonHandler
+from managmant_files_dirs.Hadler_file import JsonHandler
 from config import EDIT_ECO, name_file_sample
 
 

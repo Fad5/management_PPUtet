@@ -1,9 +1,7 @@
 import pyautogui
 import json
-from config import path_btn_signal, path_btn_pputest
+from config import path_btn_signal
 
-
-# 1. Найти координаты для ввода и потом работы
 
 def first_point(list_scrins):
     """
@@ -18,8 +16,8 @@ def first_point(list_scrins):
     list_points = []
     for scrin in list_scrins:  # Проходмся по списку циклом
         try:
-            # Добаляем к названия файла папку, аргумент 
-            # confidence показвает скакой точностью искать 
+            # Добавляем к названию файла папку, аргумент
+            # confidence показывает с какой точностью искать
             location = pyautogui.locateOnScreen('btn_pputest/' + scrin, confidence=0.95)
             list_points.append({scrin[:-4]: location})
 

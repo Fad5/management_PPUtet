@@ -1,5 +1,9 @@
+import keyboard
 import pyautogui
 import time
+import platform
+
+import pyperclip
 
 
 def correct_name_file_csv(name: str, press: str) -> str:
@@ -38,3 +42,32 @@ def wait_loading(screen_path: str) -> None:
             i += 1
         except:
             i = 0
+
+
+def check_platform() -> tuple:
+    """
+    Функция для отслеживания версии windows
+
+    Возвращает:
+    - version_platform - список с данными о платформе
+    """
+    version_platform = platform.win32_ver()
+    return version_platform
+
+
+def paste(text: str):
+    """
+    Функция имитации нажатия ctrl + v
+    и вставки текста
+
+    Аргументы:
+    - text - текст который нужно вставить
+    """
+    # buffer = pyperclip.paste()  # Сохраняем текущий буфер обмен
+    pyperclip.copy(text)  # Копируем новый текст в буфер обмена
+    keyboard.press_and_release('ctrl + v')  # Эмулируем нажатие Ctrl + V (вставку)
+    # pyperclip.copy(buffer)  # Восстанавливаем оригинальное содержимое буфера:
+
+
+def timeout_step() -> None:
+    time.sleep(1.3)
