@@ -1,11 +1,9 @@
 import pandas as pd
 import csv
-import json
-import pprint
 from managmant_files_dirs.Hadler_file import JsonHandler
 
 
-def create_csv_file(url) -> None:
+def create_csv_file(url, name_save_file) -> None:
     """
     Загружает онлайн-таблицу Google, обрабатывает её с помощью pandas и сохраняет в CSV-файл.
     """
@@ -16,7 +14,7 @@ def create_csv_file(url) -> None:
     new_df = df[selected_columns]
 
     # Экспортируем в CSV
-    new_df.to_csv('data_base.csv', index=False)
+    new_df.to_csv(f'{name_save_file}.csv', index=False)
     print("CSV-файл успешно создан.")
 
 
@@ -33,3 +31,13 @@ def process_csv():
     return js
 
 
+def process_csv_signal(name_file):
+    with open(f'{name_file}.csv', newline='', encoding='utf-8') as file:
+        reader_csv = csv.reader(file)
+        js = [
+            {
+                'Time': row_[0], 'Name': row_[1], 'Press': row_[2]
+            }
+            for row_ in reader_csv if 'СТ-' in row_[1] and all(row_[i] for i in [0, 1, 2])
+        ]
+    return js

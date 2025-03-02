@@ -19,7 +19,7 @@ def get_data_in_js() -> list:
     return name_sample
 
 
-def create_dir(list_names: list) -> None:
+def create_dirs(list_names: list) -> None:
     """
     Функция создания папок, на вход принимает список с названиями фалов
     """
@@ -34,7 +34,7 @@ def logic_dir() -> None:
     list_name_dir = get_data_in_js()
     # Получает список, переводит в set, для того чтобы получить уникальные значения
     # И обратно переводит в list для дальнейше работы
-    create_dir(list(set(list_name_dir)))
+    create_dirs(list(set(list_name_dir)))
 
 
 def get_all_files_if_exist() -> list:
@@ -52,3 +52,7 @@ def get_all_files_if_exist() -> list:
             for file in files:
                 is_files.append(file[:-4])
     return is_files
+
+
+
+

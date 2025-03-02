@@ -1,7 +1,7 @@
 import keyboard
 import pyautogui
 
-from config import SAVE_DIR
+from config import SAVE_DIR, EDIT_ECO
 from utils import timeout_step, correct_name_file_csv, paste
 
 
@@ -13,7 +13,7 @@ def search_eco(time_file: str) -> None:
     keyboard.add_hotkey("ctrl+l", lambda: print("ctrl+alt+j was pressed"))
     pyautogui.hotkey('ctrl', 'l')
     timeout_step()
-    pyautogui.write('E:/EDIT')
+    pyautogui.write(EDIT_ECO)
     timeout_step()
     pyautogui.press('enter')
     timeout_step()
@@ -25,7 +25,7 @@ def search_eco(time_file: str) -> None:
     for _ in range(2): pyautogui.press('down')
     timeout_step()
     for _ in range(4): pyautogui.press('up')
-    btn_open = pyautogui.locateOnScreen('Signal/save/open.png', confidence=0.82)
+    btn_open = pyautogui.locateOnScreen('btn/Signal/save/open.png', confidence=0.82)
     if btn_open:
         pyautogui.click(btn_open)
     else:
@@ -40,4 +40,4 @@ def save_file_csv(name, press):
     pyautogui.hotkey('ctrl', 'l')
     paste(f"{SAVE_DIR}/{name}")
     pyautogui.press('enter')
-    if btn := pyautogui.locateOnScreen('Signal/save/save.png', confidence=0.80): pyautogui.click(btn)
+    if btn := pyautogui.locateOnScreen('btn/Signal/save/save.png', confidence=0.80): pyautogui.click(btn)

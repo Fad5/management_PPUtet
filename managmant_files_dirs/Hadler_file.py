@@ -18,6 +18,7 @@ class JsonHandler:
         """
         with open(f"{path}.json", "w") as file:
             json.dump(data, file)
+            print('Файл успешно сохранен!')
 
     @staticmethod
     def read_json(path):

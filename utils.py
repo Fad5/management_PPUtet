@@ -2,8 +2,10 @@ import keyboard
 import pyautogui
 import time
 import platform
-
+import os
 import pyperclip
+
+from config import path_btn_pputest, path_btn_signal
 
 
 def correct_name_file_csv(name: str, press: str) -> str:
@@ -70,4 +72,15 @@ def paste(text: str):
 
 
 def timeout_step() -> None:
+    """
+    Функция паузы
+    """
     time.sleep(1.3)
+
+
+def create_dir() -> None:
+    """
+    Функция для создания корневых паок в которых будут храниться скриншоты кнопок
+    """
+    for i in path_btn_pputest, path_btn_signal:
+        os.makedirs(i, exist_ok=True)

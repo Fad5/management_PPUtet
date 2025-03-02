@@ -19,7 +19,7 @@ def first_point(list_screens):
         if screen[1:] in ['.png', '.PNG']:
             # Добавляем к названию файла папку, аргумент
             # confidence показывает с какой точностью искать
-            location = pyautogui.locateOnScreen('Signal/' + screen, confidence=0.78)
+            location = pyautogui.locateOnScreen('btn/Signal/' + screen, confidence=0.78)
             list_points.append({screen[:-4]: location})
             pyautogui.click(location)
         else:
@@ -40,7 +40,7 @@ def main():
             list_point = first_point(screens)
             search_eco(i['Time'])
             save_file_csv(i['Name'], i['Press'])
-            wait_loading('Signal/save/2.png')
+            wait_loading('btn/Signal/save/2.png')
             print(i['Name'], 'Готово')
 
 
