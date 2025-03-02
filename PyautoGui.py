@@ -3,7 +3,7 @@ import json
 from config import path_btn_signal
 
 
-def first_point(list_scrins):
+def first_point(list_screens):
     """
     Получает список координат всех инпутов и возвращает 
 
@@ -14,18 +14,18 @@ def first_point(list_scrins):
     - list_points - координаты инпутов 
     """
     list_points = []
-    for scrin in list_scrins:  # Проходмся по списку циклом
+    for screen in list_screens:  # Проходмся по списку циклом
         try:
             # Добавляем к названию файла папку, аргумент
             # confidence показывает с какой точностью искать
-            location = pyautogui.locateOnScreen('btn_pputest/' + scrin, confidence=0.95)
-            list_points.append({scrin[:-4]: location})
+            location = pyautogui.locateOnScreen('btn_pputest/' + screen, confidence=0.95)
+            list_points.append({screen[:-4]: location})
 
             # pyautogui.doubleClick(location)
             # pyautogui.write('Hello world!', interval=0.1)
 
         except pyautogui.ImageNotFoundException:
-            print(f'ImageNotFoundException: {scrin}')
+            print(f'ImageNotFoundException: {screen}')
     return list_points
 
 

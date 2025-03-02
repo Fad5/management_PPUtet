@@ -4,6 +4,7 @@ import time
 import platform
 import os
 import pyperclip
+from tkinter import filedialog
 
 from config import path_btn_pputest, path_btn_signal
 
@@ -80,7 +81,14 @@ def timeout_step() -> None:
 
 def create_dir() -> None:
     """
-    Функция для создания корневых паок в которых будут храниться скриншоты кнопок
+    Функция для создания корневых папок в которых будут храниться скриншоты кнопок
     """
     for i in path_btn_pputest, path_btn_signal:
         os.makedirs(i, exist_ok=True)
+
+
+def dssdf() -> None:
+    filepath = filedialog.askdirectory()
+    print(filepath)
+
+dssdf()

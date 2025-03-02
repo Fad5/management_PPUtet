@@ -9,5 +9,5 @@ LINK_TIME_SAMPLE = 'https://docs.google.com/spreadsheets/d/10IAvwfflCwFk-OcaPU5V
 
 name_file_sample = 'C:/Users/andre/Desktop/auto_a/data_for_signal.json'
 
-path_btn_pputest = 'btn_pputest'
-path_btn_signal = 'btn/Signal'
+path_btn_pputest = 'btn/btn_pputest'
+path_btn_signal = 'btn/bnt_signal'

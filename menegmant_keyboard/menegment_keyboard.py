@@ -25,7 +25,7 @@ def search_eco(time_file: str) -> None:
     for _ in range(2): pyautogui.press('down')
     timeout_step()
     for _ in range(4): pyautogui.press('up')
-    btn_open = pyautogui.locateOnScreen('btn/Signal/save/open.png', confidence=0.82)
+    btn_open = pyautogui.locateOnScreen('btn/btn_signal/save/open.png', confidence=0.82)
     if btn_open:
         pyautogui.click(btn_open)
     else:
@@ -40,4 +40,4 @@ def save_file_csv(name, press):
     pyautogui.hotkey('ctrl', 'l')
     paste(f"{SAVE_DIR}/{name}")
     pyautogui.press('enter')
-    if btn := pyautogui.locateOnScreen('btn/Signal/save/save.png', confidence=0.80): pyautogui.click(btn)
+    if btn := pyautogui.locateOnScreen('btn/btn_signal/save/save.png', confidence=0.80): pyautogui.click(btn)
