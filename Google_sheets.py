@@ -4,45 +4,32 @@ import json
 import pprint
 from managmant_files_dirs.Hadler_file import JsonHandler
 
-def write_json(name_file, data):
-    with open(f"{name_file}.json", "w", encoding='utf-8') as fh:
-        json.dump(data, fh)
-        
-def create_cvs_file() -> None:
+
+def create_csv_file(url) -> None:
     """
-    Функция забирает онлайн таблицу google, проходится pandas и создает csv с данными
-    :return: None
+    Загружает онлайн-таблицу Google, обрабатывает её с помощью pandas и сохраняет в CSV-файл.
     """
-    df = pd.read_csv(
-        'https://docs.google.com/spreadsheets/d/10HsBr1OrPiev5bqHZ8HwoG7WfkqpSuzZY5CYfIqyujU/export?format=csv')
-    column_names = df.keys().tolist()
+    df = pd.read_csv(url)
 
-    new_df = df[
-        [column_names[0], column_names[1], column_names[2], column_names[3], column_names[4], column_names[5],
-         column_names[6], column_names[7], column_names[8],
-         column_names[9], column_names[10], column_names[11], column_names[12], column_names[13],
-         column_names[14], column_names[15], column_names[16], column_names[17]]]  # Выберем из даты фрейма столбцы и сохраним в новый дате фрейм
-    new_df.to_csv('data_base.csv', index=False)  # Экспорт в CSV файл
+    # Выбираем только нужные столбцы
+    selected_columns = df.columns[:18]  # Берем первые 18 столбцов
+    new_df = df[selected_columns]
 
-# create_cvs_file()
+    # Экспортируем в CSV
+    new_df.to_csv('data_base.csv', index=False)
+    print("CSV-файл успешно создан.")
 
-with open('data_base.csv', newline='', encoding='utf-8') as File:
-    reader = csv.reader(File)
-    js = []
-    for row in reader:
-        if 'СТ-' in row[0]:
-            if  row[2] and row[3] and row[4] :
-                 js.append({
-                        'Name': row[0],
-                        'Width': row[5],
-                        'Length': row[10],
-                        'Height': row[15],
-                        'Weight': row[16],
-                        'Press': row[17]
-                    })
-print(js)
 
-JsonHandler.write_json('goo.json', js)
-aaaa = JsonHandler.read_json('goo.json')
+def process_csv():
+    with open('data_base.csv', newline='', encoding='utf-8') as file:
+        reader_csv = csv.reader(file)
+        js = [
+            {
+                'Name': row_[0], 'Width': row_[5], 'Length': row_[10],
+                'Height': row_[15], 'Weight': row_[16], 'Press': row_[17]
+            }
+            for row_ in reader_csv if 'СТ-' in row_[0] and all(row_[i] for i in [2, 3, 4])
+        ]
+    return js
 
-pprint.pprint(aaaa)
+
