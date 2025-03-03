@@ -66,10 +66,8 @@ def paste(text: str):
     Аргументы:
     - text - текст который нужно вставить
     """
-    # buffer = pyperclip.paste()  # Сохраняем текущий буфер обмен
     pyperclip.copy(text)  # Копируем новый текст в буфер обмена
     keyboard.press_and_release('ctrl + v')  # Эмулируем нажатие Ctrl + V (вставку)
-    # pyperclip.copy(buffer)  # Восстанавливаем оригинальное содержимое буфера:
 
 
 def timeout_step() -> None:

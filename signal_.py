@@ -27,21 +27,33 @@ def first_point(list_screens):
     return list_points
 
 
-def main():
-    list_samples = logic_check()
-    exist_files = get_all_files_if_exist()
-    for i in list_samples:
-        name_file = correct_name_file_csv(i['Name'], i['Press'])
+def main() -> None:
+    """
+    Основная функция обработки данных.
+    
+    Описание:
+    1. Получает список образцов с помощью `logic_check()`.
+    2. Получает список существующих файлов через `get_all_files_if_exist()`.
+    3. Для каждого образца:
+        - Генерирует имя файла через `correct_name_file_csv()`.
+        - Проверяет, существует ли файл.
+            Если да — выводит сообщение и переходит к следующему образцу.
+        - Выполняет поиск `search_eco()` по времени образца.
+        - Сохраняет данные в CSV-файл с помощью `save_file_csv()`.
+        - Ожидает завершения сохранения через `wait_loading()`.
+        - Выводит сообщение о завершении обработки.
+    """
+    exist_files = set(get_all_files_if_exist())
+    
+    for sample in logic_check():
+        name_file = correct_name_file_csv(sample['Name'], sample['Press'])
         if name_file in exist_files:
-            print(i['Name'], 'Уже существует')
-            pass
-        else:
-            screens = get_files_edit(path_btn_signal)
-            list_point = first_point(screens)
-            search_eco(i['Time'])
-            save_file_csv(i['Name'], i['Press'])
-            wait_loading('btn/btn_signal/save/2.png')
-            print(i['Name'], 'Готово')
-
+            print(f"{sample['Name']} уже существует")
+            continue
+        
+        search_eco(sample['Time'])
+        save_file_csv(sample['Name'], sample['Press'])
+        wait_loading('btn/btn_signal/save/2.png')
+        print(f"{sample['Name']} готово")
 
 main()

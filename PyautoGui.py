@@ -8,13 +8,13 @@ def first_point(list_screens):
     Получает список координат всех инпутов и возвращает 
 
     Аргументы:
-    - list_scrins - список скпиншотов инпутов в формате PNG
+    - list_screens - список скриншотов инпутов в формате PNG
 
     Возвращает:
     - list_points - координаты инпутов 
     """
     list_points = []
-    for screen in list_screens:  # Проходмся по списку циклом
+    for screen in list_screens:  # Проходимся по списку циклом
         try:
             # Добавляем к названию файла папку, аргумент
             # confidence показывает с какой точностью искать
@@ -57,9 +57,6 @@ def enter_data(data, locations):
         pyautogui.doubleClick(value)
         print(data[key])
         pyautogui.write(data[key], interval=0.1)
-
-    # pyautogui.typewrite(data)
-    # pass
 
 
 def get_data(name_file):
