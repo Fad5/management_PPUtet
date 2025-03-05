@@ -83,10 +83,3 @@ def create_dir() -> None:
     """
     for i in path_btn_pputest, path_btn_signal:
         os.makedirs(i, exist_ok=True)
-
-
-def dssdf() -> None:
-    filepath = filedialog.askdirectory()
-    print(filepath)
-
-dssdf()

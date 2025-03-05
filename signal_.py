@@ -27,7 +27,7 @@ def first_point(list_screens):
     return list_points
 
 
-def main() -> None:
+def management_signal(save_path, filepath) -> None:
     """
     Основная функция обработки данных.
     
@@ -56,4 +56,3 @@ def main() -> None:
         wait_loading('btn/btn_signal/save/2.png')
         print(f"{sample['Name']} готово")
 
-main()
