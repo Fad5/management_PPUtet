@@ -57,15 +57,15 @@ def check(list_name_files: list, json_data: dict) -> list:
     return exits_file_in_table
 
 
-def logic_check() -> list:
+def logic_check(loading_path:str) -> list:
     """
     Прописана логика файла
 
     Возвращает:
-    - list_files - список файлов
+    - loading_path - путь к файлам экофизики
     """
     samples_press = JsonHandler.read_json(name_file_sample)  # Получаем данные с json файла
-    files = get_files_edit(EDIT_ECO)  # Получаем файлы
+    files = get_files_edit(loading_path)  # Получаем файлы
     correct_files = correct_name_files(files)  # Проверяем файлы
     list_files = check(correct_files, samples_press)  # Сверяем файлы экофизики с google sheet
     return list_files

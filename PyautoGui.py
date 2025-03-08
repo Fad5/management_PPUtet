@@ -65,7 +65,7 @@ def get_data(name_file):
         return data
 
 
-def get_keys_or_value(data):
+def get_keys_or_value(data: list) ->list:
     """
     Получение списка со значениями или ключами 
     

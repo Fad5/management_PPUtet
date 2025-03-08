@@ -3,7 +3,7 @@ import csv
 from managmant_files_dirs.Hadler_file import JsonHandler
 
 
-def create_csv_file(url, name_save_file) -> None:
+def create_csv_file(url: str, name_save_file: str) -> None:
     """
     Загружает онлайн-таблицу Google, обрабатывает её с помощью pandas и сохраняет в CSV-файл.
     """
@@ -17,8 +17,8 @@ def create_csv_file(url, name_save_file) -> None:
     new_df.to_csv(f'{name_save_file}.csv', index=False)
     print("CSV-файл успешно создан.")
 
-    
-def process_csv(name_file='data_base', mode='default'):
+
+def process_csv(name_file: str, mode='default'):
     """
     Читает CSV-файл и преобразует данные в JSON-формат.
     
@@ -29,20 +29,31 @@ def process_csv(name_file='data_base', mode='default'):
     Возвращает:
     - data (list): Данные в формате JSON.
     """
+    # Чтение CSV-файла
     with open(f'{name_file}.csv', newline='', encoding='utf-8') as file:
-        reader_csv = csv.reader(file)
-        
-        key_map = {
-            'default': [('Name', 0), ('Width', 5), ('Length', 10),
-                         ('Height', 15), ('Weight', 16), ('Press', 17)],
-            'signal': [('Time', 0), ('Name', 1), ('Press', 2)]
-        }
-        
-        if mode not in key_map:
-            raise ValueError("Неверный режим обработки. Используйте 'default' или 'signal'.")
-        
-        return [
-            {key: row[idx] for key, idx in key_map[mode]}
-            for row in reader_csv if 'СТ-' in row[key_map[mode][0][1]]
-             and all(row[i[1]] for i in key_map[mode])
-        ]
+        reader = csv.reader(file)
+
+        # Фильтрация строк и формирование списка словарей
+        filtered_data = []
+        if mode == 'default':
+            for row in reader:
+                if 'СТ-' in row[0]:
+                    if row[2] and row[3] and row[4]:
+                        filtered_data.append({
+                            'Name': row[0],
+                            'Width': row[5],
+                            'Length': row[10],
+                            'Height': row[15],
+                            'Weight': row[16],
+                            'Press': row[17]
+                        })
+        if mode == 'signal':
+            for row in reader:
+                if row[0] and row[1] and row[2]:
+                    filtered_data.append({
+                        'Time': row[0],
+                        'Name': row[1],
+                        'Press': row[2]
+                    })
+
+    return filtered_data
