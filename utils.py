@@ -112,18 +112,30 @@ def search_eco(name_file: str, loading_path) -> None:
         print("Кнопка 'Открыть' не найдена.")
 
 
-def fill_fields(coordinates, loading_path):
+def fill_fields(coordinates, loading_path, data_upload):
+    global cargo_, under_load
     count = 0
     list_file = get_files_and_sort(loading_path)
     for field, (x, y) in coordinates.items():
+        data_file = list_file[count]
+        name, cargo = get_name_upload(data_file)
+        for i in data_upload:
+            if i['Name'] == name and i['Press']== cargo:
+                cargo_ = i['Press']
+                under_load = i['Under_load']
+
         if count == 0:
             pyautogui.click(x, y)
-            search_eco(loading_path=loading_path, name_file=list_file[count])
+            search_eco(loading_path=loading_path, name_file=data_file)
             count += 1
+
+        if count == 1:
+            pyautogui.click(x, y)
+            paste(cargo_)
         else:
             time.sleep(1)
             pyautogui.click(x, y)
-            paste(field)
+            paste(under_load)
             print(f"Заполнено {field} по координатам ({x}, {y})")
 
 
@@ -138,3 +150,10 @@ def get_files_and_sort(path):
     sorted_files = sorted(files, key=extract_number)
     return sorted_files
 
+
+def get_name_upload(filename):
+    start = filename.find('(')
+    end = filename.find(')')
+    cargo =(filename[start+1:end])
+    name =(filename[:start])
+    return name, cargo
