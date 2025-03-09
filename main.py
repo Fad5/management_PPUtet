@@ -40,7 +40,7 @@ def download_files() -> None:
 
 
 def main() -> None:
-    # loading_path, save_path = path_save()
+    #loading_path, save_path = path_save()
     loading_path = 'D:/EDT/1'
     save_path = 'F:/Протоколы'
     download_files()

@@ -4,7 +4,7 @@ import time
 import platform
 import os
 import pyperclip
-from tkinter import filedialog
+import re
 
 from config import path_btn_pputest, path_btn_signal
 
@@ -83,3 +83,58 @@ def create_dir() -> None:
     """
     for i in path_btn_pputest, path_btn_signal:
         os.makedirs(i, exist_ok=True)
+
+
+def search_eco(name_file: str, loading_path) -> None:
+    """
+    Функция для поиска файлов
+    """
+    timeout_step()
+    keyboard.add_hotkey("ctrl+l", lambda: print("ctrl+alt+j was pressed"))
+    pyautogui.hotkey('ctrl', 'l')
+    timeout_step()
+    paste(loading_path)
+    timeout_step()
+    pyautogui.press('enter')
+    timeout_step()
+    pyautogui.hotkey('ctrl', 'f')
+    timeout_step()
+    paste(name_file)
+    timeout_step()
+
+    for _ in range(2): pyautogui.press('down')
+    timeout_step()
+    for _ in range(4): pyautogui.press('up')
+    btn_open = pyautogui.locateOnScreen('btn/btn_signal/save/open.png', confidence=0.82)
+    if btn_open:
+        pyautogui.click(btn_open)
+    else:
+        print("Кнопка 'Открыть' не найдена.")
+
+
+def fill_fields(coordinates, loading_path):
+    count = 0
+    list_file = get_files_and_sort(loading_path)
+    for field, (x, y) in coordinates.items():
+        if count == 0:
+            pyautogui.click(x, y)
+            search_eco(loading_path=loading_path, name_file=list_file[count])
+            count += 1
+        else:
+            time.sleep(1)
+            pyautogui.click(x, y)
+            paste(field)
+            print(f"Заполнено {field} по координатам ({x}, {y})")
+
+
+# Функция для извлечения числа из строки
+def extract_number(filename):
+    match = re.search(r'\((\d+)\)', filename)  # Ищем число в скобках
+    return int(match.group(1)) if match else 0  # Преобразуем в int
+
+
+def get_files_and_sort(path):
+    files = os.listdir(path)
+    sorted_files = sorted(files, key=extract_number)
+    return sorted_files
+

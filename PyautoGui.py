@@ -1,96 +1,67 @@
+import os
+
 import pyautogui
-import json
-from config import path_btn_signal
+import keyboard
+from managmant_files_dirs.Hadler_file import JsonHandler
+from config import coordinates_input_trials
+
+coordinates = {}
 
 
-def first_point(list_screens):
-    """
-    Получает список координат всех инпутов и возвращает 
-
-    Аргументы:
-    - list_screens - список скриншотов инпутов в формате PNG
-
-    Возвращает:
-    - list_points - координаты инпутов 
-    """
-    list_points = []
-    for screen in list_screens:  # Проходимся по списку циклом
-        try:
-            # Добавляем к названию файла папку, аргумент
-            # confidence показывает с какой точностью искать
-            location = pyautogui.locateOnScreen('btn_pputest/' + screen, confidence=0.95)
-            list_points.append({screen[:-4]: location})
-
-            # pyautogui.doubleClick(location)
-            # pyautogui.write('Hello world!', interval=0.1)
-
-        except pyautogui.ImageNotFoundException:
-            print(f'ImageNotFoundException: {screen}')
-    return list_points
+def save_coordinates(list_text, count, name_save_field):
+    print(count - 1)
+    x, y = pyautogui.position()
+    field_name = f"{name_save_field}{count}"
+    coordinates[field_name] = (x, y)
+    print(f"Сохранена координата {list_text[count - 1]}: {x}, {y}")
+    if count == len(list_text):
+        pass
+    else:
+        print('NEXT_____________________________________')
+        print('\nНажмите на ' + list_text[count])
+    count += 1
+    return count
 
 
-def delete_input_txt(locations):
-    """
-    Функция для удаления данных в инпуте 
-
-    Аргументы:
-    - locations - координаты инпутов 
-
-    Возвращает:None
-    """
-    for location in locations:
-        pyautogui.doubleClick(location)
-        pyautogui.hotkey('ctrl', 'a')
-        pyautogui.press('delete')
+def get_coordinates_(list_text, name_save_field):
+    field_index_ = 1
+    print("Нажмите Enter для сохранения координат")
+    print('\nНажмите на ' + list_text[field_index_ - 1])
+    while True:
+        if keyboard.is_pressed("enter"):
+            field_index_ = save_coordinates(list_text, field_index_, name_save_field)
+            keyboard.wait("enter")
+        if len(list_text) == field_index_ - 1:
+            break
 
 
-def get_key(i_need_this_dict):
-    for key in i_need_this_dict:
-        value = i_need_this_dict[key]
-        return key, value
+def save_json():
+    JsonHandler.write_json('settings', coordinates)
 
 
-def enter_data(data, locations):
-    for location in locations:
-        print(location)
-        key, value = get_key(location)
-        pyautogui.doubleClick(value)
-        print(data[key])
-        pyautogui.write(data[key], interval=0.1)
+def list_current_text(count_trials):
+    current_list = []
+    count = 1
+    for range_i in range(count_trials):
+        for i in coordinates_input_trials:
+            current_list.append(i + ' ' + str(count))
+        count += 1
+    return current_list
 
 
-def get_data(name_file):
-    with open(name_file, "r") as fh:
-        data = json.load(fh)
-        return data
-
-
-def get_keys_or_value(data: list) ->list:
-    """
-    Получение списка со значениями или ключами 
-    
-    Аргументы:
-    - data - словарь
-    
-    Возвращает:
-    - list_keys - список со значениями или ключами
-    """
-    list_keys = []
-    for i in data:
-        key = get_key(i)
-        list_keys.append(key[1])
-    print(list_keys)
-    return list_keys
-
-
-def main():
-    list_points = first_point(path_btn_signal)
-    data = get_data('dimensions.json')
-    for i in data:
-        print(i)
-        enter_data(data=i, locations=list_points)
-        # Функция для ввода данных о пригрузе и о файле с испытаниями
-        delete_input_txt(get_keys_or_value(list_points))
-
-
-main()
+def logic_poit_trial():
+    list_fails = os.listdir()
+    if 'settings.json' in list_fails:
+        resave = input("У вас уже есть сохраненные координаты перезаписать? 1.Да 2.Нет ")
+        if resave == "1":
+            count_trials = int(input('Введите количество испытаний: '))
+            current_text = list_current_text(count_trials=count_trials)
+            get_coordinates_(list_text=current_text, name_save_field='field_trials_')
+            save_json()
+        else:
+            pass
+    else:
+        count_trials = int(input('Введите количество испытаний: '))
+        current_text = list_current_text(count_trials=count_trials)
+        get_coordinates_(list_text=current_text, name_save_field='field_trials_')
+        save_json()

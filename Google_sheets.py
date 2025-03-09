@@ -53,7 +53,8 @@ def process_csv(name_file: str, mode='default'):
                     filtered_data.append({
                         'Time': row[0],
                         'Name': row[1],
-                        'Press': row[2]
+                        'Press': row[2],
+                        'Under_load': row[3]
                     })
 
     return filtered_data

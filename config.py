@@ -1,4 +1,5 @@
 # Путь к файлам EDIT
+
 EDIT_ECO = 'J:/EDIT'
 
 # Путь в какую папку сохранять результаты
@@ -13,3 +14,7 @@ name_file_sample = 'sample_time.json'
 
 path_btn_pputest = 'btn/btn_pputest'
 path_btn_signal = 'btn/bnt_signal'
+
+coordinates_input = ['а, мм', 'b, мм', 'h (начальная), мм', 'Масса, г', 'кнопку рассчитать', 'кнопку сохранить']
+
+coordinates_input_trials = ['обзор', 'h под нагрузкой', 'пригруз']
